@@ -1,5 +1,3 @@
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,7 +5,6 @@
 @layer base {
   .theme {
     --font-heading: var(--font-sans);
-    --font-sans: var(--font-sans)
   }
   :root {
     --background: oklch(1 0 0);
@@ -77,12 +74,79 @@
     --sidebar-ring: oklch(0.556 0 0)
   }
   * {
-    @apply border-border outline-ring/50;
+    border-color: var(--border);
   }
   body {
-    @apply bg-background text-foreground;
+    background: var(--background);
+    color: var(--foreground);
+    min-height: 100vh;
+    text-rendering: geometricPrecision;
   }
   html {
-    @apply font-sans;
+    font-family: var(--font-sans), sans-serif;
+  }
+}
+
+@layer utilities {
+  .hero-grid {
+    background-image:
+      linear-gradient(to right, color-mix(in oklab, var(--border) 35%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, var(--border) 35%, transparent) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .fade-up {
+    animation: fade-up 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .fade-up-delay-1 {
+    animation-delay: 120ms;
+  }
+
+  .fade-up-delay-2 {
+    animation-delay: 240ms;
+  }
+
+  .fade-up-delay-3 {
+    animation-delay: 360ms;
+  }
+
+  .pulse-soft {
+    animation: pulse-soft 3.2s ease-in-out infinite;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  .fade-up-delay-1,
+  .fade-up-delay-2,
+  .fade-up-delay-3,
+  .pulse-soft {
+    animation: none;
   }
 }
